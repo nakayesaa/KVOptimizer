@@ -1,6 +1,6 @@
-# Simple KV Cache Optimization
+# KV Cache Optimization
 
-A project focused on implementing and optimizing KV cache eviction algorithms (StreamingLLM, Heavy Hitter Oracle, and Hybrid mechanisms) to enable efficient long-context generation under constrained hardware(fahhh)
+A project focused on implementing and optimizing KV cache eviction algorithms to enable efficient long-context generation under constrained hardware
 
 ## Getting Started
 
@@ -16,9 +16,27 @@ A project focused on implementing and optimizing KV cache eviction algorithms (S
 pip install torch transformers datasets matplotlib seaborn
 ```
 
-## Running Benchmarks
+---
 
-To run the unified driver script:
+## Phase 1: Foundations & Baselines
+
+You can run the Phase 1 scripts to establish control metrics and visualize attention sparsity:
+1. **Inspect Cache Growth & Save Attentions**
+   ```bash
+   python scripts/inspectKVCache.py
+   ```
+2. **Run Baseline Benchmarks (Memory & Perplexity)**
+   ```bash
+   python scripts/runBaseline.py
+   ```
+3. **Plot Attention Heatmaps & Sparsity Curve**
+   ```bash
+   python scripts/plotAttentionHeatmaps.py
+   ```
+---
+
+## Running Phase 2 Benchmarks
+Once custom caches are implemented, use the unified driver script:
 ```bash
 python run_benchmark.py --cache_type full --budget 128
 ```
