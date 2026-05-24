@@ -14,7 +14,7 @@ def tensorSizeMb(tensor: torch.Tensor) -> float:
     return tensor.numel() * tensor.element_size() / (1024 ** 2)
 
 def kvCacheSizeMb(pastKeyValues) -> float:
-    sum = 0
+    sum = 0.0
     for k,v in pastKeyValues:
         sum = sum + tensorSizeMb(k) + tensorSizeMb(v)
     return sum
@@ -30,7 +30,7 @@ def main():
     print(f"Using device: {device}")
 
     tokenizer = GPT2Tokenizer.from_pretrained(modelName)
-    model     = GPT2LMHeadModel.from_pretrained(modelName)
+    model     = GPT2LMHeadModel.from_pretrained(modelName, attn_implementation="eager")
     model.to(device).eval()
 
     prompt = (
@@ -87,6 +87,6 @@ def main():
     print("\nfinal:\n")
     print(tokenizer.decode(generatedIds, skip_special_tokens=True))
     print(f"\nSaved:\n - {csvPath}\n - {attentionDirectory}/")
-    
+
 if __name__ == "__main__":
     main()
